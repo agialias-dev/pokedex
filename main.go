@@ -1,5 +1,10 @@
-package pokedex
+package main
+
+import (
+	"fmt"
+)
 
 func main() {
-	print("Hello, World!")
+	output := cleanInput("  hello World  ")
+	fmt.Println(output)
 }
