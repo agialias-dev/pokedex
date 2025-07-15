@@ -13,6 +13,7 @@ type config struct {
 	pokeapiClient    pokeapi.Client
 	nextLocationsURL *string
 	prevLocationsURL *string
+	pokedex          map[string]pokeapi.PokemonDetails
 }
 
 func startRepl(config *config) {
@@ -51,6 +52,17 @@ func startRepl(config *config) {
 					}
 					location := input[i+1]
 					err := command.callback(config, location)
+					if err != nil {
+						fmt.Printf("Command failed: %v\n", err)
+					}
+					continue
+				case "catch":
+					if len(input) <= 1 {
+						fmt.Printf("you must provide a Pokemon name to catch\n")
+						continue
+					}
+					pokemon := input[i+1]
+					err := command.callback(config, pokemon)
 					if err != nil {
 						fmt.Printf("Command failed: %v\n", err)
 					}
@@ -101,6 +113,11 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Explores a location, showing you the Pokemon found there. ",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Attempts to capture a Pokemon in the current location. The difficulty of catching depends on the Pokemon's experience level.",
+			callback:    commandCatch,
 		},
 	}
 }
