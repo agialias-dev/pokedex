@@ -6,6 +6,10 @@ import (
 )
 
 func commandCatch(config *config, pokemon string) error {
+	if pokemon == "" {
+		return fmt.Errorf("you must provide a Pokemon name to catch")
+	}
+
 	pokemonResp, err := config.pokeapiClient.GetPokemonDetails(pokemon)
 	if err != nil {
 		return err

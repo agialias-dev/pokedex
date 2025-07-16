@@ -67,6 +67,17 @@ func startRepl(config *config) {
 						fmt.Printf("Command failed: %v\n", err)
 					}
 					continue
+				case "inspect":
+					if len(input) <= 1 {
+						fmt.Printf("you must provide a Pokemon name to inspect\n")
+						continue
+					}
+					pokemon := input[i+1]
+					err := command.callback(config, pokemon)
+					if err != nil {
+						fmt.Printf("Command failed: %v\n", err)
+					}
+					continue
 				}
 				continue
 			}
@@ -118,6 +129,11 @@ func getCommands() map[string]cliCommand {
 			name:        "catch",
 			description: "Attempts to capture a Pokemon in the current location. The difficulty of catching depends on the Pokemon's experience level.",
 			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "Returns the stats of a Pokemon contained in your Pokedex.",
+			callback:    commandInspect,
 		},
 	}
 }
