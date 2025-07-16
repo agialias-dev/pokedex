@@ -40,6 +40,8 @@ func startRepl(config *config) {
 				case "map":
 					fallthrough
 				case "mapb":
+					fallthrough
+				case "pokedex":
 					err := command.callback(config, "")
 					if err != nil {
 						fmt.Printf("Command failed: %v\n", err)
@@ -134,6 +136,11 @@ func getCommands() map[string]cliCommand {
 			name:        "inspect",
 			description: "Returns the stats of a Pokemon contained in your Pokedex.",
 			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Returns the Pokemon contained in your Pokedex.",
+			callback:    commandPokedex,
 		},
 	}
 }
